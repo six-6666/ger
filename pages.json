@@ -153,6 +153,13 @@
 				"navigationBarTitleText":"登录",
 				"navigationStyle":"custom"
 			}
+		},
+		{
+			"path":"pages/index/home-gather/details/DetailsMods",
+			"style":{
+				"navigationBarTitleText":"详情",//直供、认养、预约
+				"navigationStyle":"custom"
+			}
 		}
 	],
 	"tabBar":{

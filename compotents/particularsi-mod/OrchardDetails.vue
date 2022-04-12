@@ -55,7 +55,7 @@
 </template>
 
 <script>
-import tables from './discussmod/tables.vue';
+import tables from './discussmod/Tables.vue';
 export default {
 	components: { tables },
 	data() {

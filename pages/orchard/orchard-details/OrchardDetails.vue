@@ -1,7 +1,7 @@
 <template>
 	<view class="details">
 		<!-- 顶部导航 -->
-		<top-nav :retreat="true" titlewee="果园详情"></top-nav>
+		<top-nav :bg="true" :retreat="true" titlewee="果园详情"></top-nav>
 		<scroll-view :scroll-y="true" class="contents">
 			<!-- 果园基地信息模块 -->
 			<shop-referral></shop-referral>
@@ -47,9 +47,13 @@
 		height: 100%;
 		display: flex;
 		flex-direction: column;
+		background: url(../../../static/orchard/bg.png) no-repeat;
+		background-position: left top right;
+		background-size: 100% 500rpx;
 		.contents{
 			flex: auto;
 			overflow: auto;
+			margin-top: 24rpx;
 		}
 	.select {
 		margin-top: 24rpx;

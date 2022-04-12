@@ -1,16 +1,16 @@
 <template>
 	<view class="">
-		<view class="content-top">
+		<view class="content-top" v-if="amounts">
 			<view :class="{ dert: dertstore === 1 }" @click="clickall(1)">全部</view>
 			<view :class="{ dert: dertstore === 2 }" @click="clickall(2)">
 				好评
-				<text class="content-top-txt">128</text>
+				<text class="content-top-txt">{{amounts.bestCount}}</text>
 			</view>
 			<view :class="{ dert: dertstore === 3 }" @click="clickall(3)">
 				差评
-				<text class="content-top-txt">123</text>
+				<text class="content-top-txt">{{amounts.badCount}}</text>
 			</view>
-			<text>商品好评率99%</text>
+			<text>商品好评率{{statistics}}%</text>
 		</view>
 		<view class="centents">
 			<view class="centents-titles">
@@ -27,39 +27,61 @@
 </template>
 
 <script>
-import observer from './discussmod/observer.vue'; //评论模块组件
+import observer from './discussmod/Observer.vue'; //评论模块组件
 
-import {list} from '@/api/classify.js'
+import {list,starTypeCount} from '@/api/classify.js'
 export default {
 	components: { observer },
 	props:{
-		goodsId:{
-			type:String,
-			default: ''
+		id:{
+			type:String | Number,
+			default: undefined
 		}
 	},
 	data() {
 		return {
 			dertstore: 1, //评论筛选点击模块的状态保存
 			butsstore: 1, //评论时间筛选的状态保存
-			critic: [],
+			critic: [],//评论数据
+			amounts:null,//好差评数量数据
 		};
 	},
 	created() {
 		this.list()
+		this.starTypeCount()
 	},
 	methods: {
+		// 好差评切换数据请求
 		clickall(id) {
+			if(id != this.dertstore){
+				if(id == 1) this.list()
+				if(id == 2) this.list('4,5')
+				if(id == 3) this.list('1,2')
+			}
 			this.dertstore = id;
 		},
 		clickbut(id) {
 			this.butsstore = id;
 		},
+		// 获取所有评论数据
 		list(star){
-			list(this.goodsId,star).then(res =>{
-				console.log(res)
+			list(this.id,star).then(res =>{
+				// console.log(res)
 				this.critic = res.data
 			})
+		},
+		//评论数量数据
+		starTypeCount(){
+			starTypeCount(this.id).then(res =>{
+				// console.log(res)
+				this.amounts = res.data
+			})
+		}
+	},
+	computed:{
+		statistics(){
+			let num = this.amounts.bestCount / (this.amounts.badCount + this.amounts.bestCount + this.amounts.mediumCount)
+			return  (num * 100).toFixed(1);
 		}
 	}
 };

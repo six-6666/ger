@@ -3,7 +3,7 @@
 		<!-- 顶部占位盒子 -->
 		<view class="status_bar"></view>
 		<!-- 导航栏 -->
-		<view class="bar">
+		<view class="bar" :class="{bga:bg}">
 			<!-- 导航栏左 -->
 			<view class="left">
 				<view  v-if="retreat" class="retraet">
@@ -38,6 +38,10 @@
 			retreat:{
 				type:Boolean,
 				default:false
+			},
+			bg:{
+				type:Boolean,
+				default:false
 			}
 		},
 		data(){
@@ -55,7 +59,7 @@
 	}
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 	.status_bar {
 		height: var(--status-bar-height);
 		width: 100%;
@@ -122,5 +126,7 @@
 	.wee{
 		font-weight: 400 !important;
 	}
-	
+	.bga{
+		background: rgba($color: #000000, $alpha: 0);
+	}
 </style>

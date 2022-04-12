@@ -27,27 +27,28 @@ export default {
 		return{
 			watch:[],//列表数据
 			id:0,//商品ID
-			title:'',//导航标题
+			title:undefined,//导航标题
+			farm_id:undefined
 		}
 	},
 	onLoad(e) {
 	// 接收首页传递来的类型ID 0:认养 1:直供 2:预约
-		this.id = e.id
-		this.title = e.title
+		this.id = e.id || 0
+		this.title = e.title || "果树认养"
 		this.selectgoodsbytype()
 	},
 	methods:{
 		// 请求列表数据
 		selectgoodsbytype(){
 			selectgoodsbytype(this.id).then(res =>{
-				// console.log(res)
+				console.log(res)
 				this.watch = res.data
 			})
 		},
 		//跳转到详情并传递参数
 		todetails(id,goodsId,farm_id){
 			uni.navigateTo({
-				url:`/pages/classify/GoodsCon/index?id=${id}&goodsId=${goodsId}&farm_id=${farm_id}`
+				url:`/pages/index/home-gather/details/DetailsMods?id=${id}&goodsId=${goodsId}&farm_id=${farm_id}`
 			})
 		}
 	}
