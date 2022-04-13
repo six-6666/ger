@@ -3,7 +3,7 @@
 		<top-nav :retreat="true" titlewee="领取优惠券"></top-nav>
 		<image src="/static/classify/banner_coupon.png" mode=""></image>
 		<scroll-view class="content-box" :scroll-y="true">
-			<card-item></card-item>
+			<card-item @receive="receive" :datas="item" v-for="(item,index) in coupondata" :key="index"></card-item>
 		</scroll-view>
 	</view>
 </template>
@@ -11,8 +11,33 @@
 <script>
 	import TopNav from '@/compotents/topnav/TopNav.vue'
 	import CardItem from './child/CardItem.vue'
+	import {getcoupon,getunclaimed} from '@/api/coupon.js'
 	export default{
-		components:{TopNav,CardItem}
+		components:{TopNav,CardItem},
+		data(){
+			return{
+				coupondata:null,//全部优惠券
+			}
+		},
+		onLoad() {
+			this.getunclaimed()
+		},
+		methods:{
+			//请求未领取的优惠券
+			getunclaimed(){
+				getunclaimed({pageNum:0,pageSize:0}).then(res =>{
+					// console.log(res)
+						this.coupondata = res.rows
+				}).catch(err => console.log(err));
+			},
+			//点击领取
+			receive(id){
+				getcoupon({couponIdP:id}).then(res =>{
+					// console.log(res);
+					this.getunclaimed()
+				})
+			}
+		}
 		
 	}
 </script>

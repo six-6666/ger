@@ -22,9 +22,18 @@
 		<view v-if="handle" class="bu-box">
 			<view class="wall" @click="handle = false"></view>
 			<view class="box">
+				<!-- 图片title价格 -->
 				<auction-item title="百色金煌芒树认养标准套餐" url="/static/img/img2.jpg" :price="99.99">
-					<template #botton><text class="botton">库存：666</text></template>
+					<template #botton>
+						<text class="botton">库存：{{quantity}}</text>
+					</template>
 				</auction-item>
+				<!-- 规格 -->
+				<view class="specification"><view class="specification-item">10斤装大芒果</view></view>
+				<view class="quantity">
+					<text>数量</text>
+					<counter v-model="quantity"></counter>
+				</view>
 			</view>
 		</view>
 	</view>
@@ -32,8 +41,9 @@
 
 <script>
 import AuctionItem from '../../auction-item/AuctionItem.vue';
+import Counter from '../../counter/Counter-Mod.vue'
 export default {
-	components: { AuctionItem },
+	components: { AuctionItem,Counter },
 	props: {
 		id: {
 			type: String | Number,
@@ -42,10 +52,15 @@ export default {
 	},
 	data() {
 		return {
-			handle: false
+			handle: true,
+			quantity:1,
 		};
 	},
-	methods: {},
+	methods: {
+		adds(e,s){
+			console.log(e,s)
+		}
+	},
 	computed: {
 		select() {
 			if (this.id == 0) return '立即认养';
@@ -133,9 +148,31 @@ export default {
 			padding: 24rpx 0rpx;
 			background: #ffffff;
 			border-radius: 40rpx 40rpx 0px 0px;
-			.botton{
+			.botton {
 				font-size: 28rpx;
 				color: #999999;
+			}
+			.specification{
+				padding: 24rpx 30rpx;
+				display: flex;
+				flex-wrap: wrap;
+				justify-content: space-between;
+				&-item{
+					padding: 12rpx 32rpx;
+					font-size: 22rpx;
+					margin-bottom: 12rpx;
+					display: inline-block;
+					color: #FF9900;
+					background: #FFF4D4;
+					border-radius: 28rpx;
+					border: 2rpx solid #FF9900;
+				}
+			}
+			.quantity{
+				padding: 24rpx 30rpx;
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
 			}
 		}
 	}

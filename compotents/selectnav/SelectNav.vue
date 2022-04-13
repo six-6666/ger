@@ -35,7 +35,7 @@
 	}
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 	.select{
 		width: 100%;
 		height: 88rpx;
